@@ -69,13 +69,10 @@ var addTask=function(e){
     //Create a new list item with the text from the #new-task:
     if (!taskInput.value) return;
     var listItem=createNewTaskElement(taskInput.value);
-
     //Append listItem to incompleteTaskHolder
     incompleteTaskHolder.appendChild(listItem);
     bindTaskEvents(listItem, taskCompleted);
-
     taskInput.value="";
-
 }
 
 //Edit an existing task.
@@ -85,7 +82,6 @@ var editTask=function(){
     console.log("Change 'edit' to 'save'");
   console.log('br');
 
-
     var listItem=this.parentNode;
 
     var editInput=listItem.querySelector('input[type=text]');
@@ -93,16 +89,21 @@ var editTask=function(){
     var editBtn=listItem.querySelector(".edit");
     var containsClass=editInput.classList.contains("editmode");
     //If class of the parent is .editmode
+
     if(editInput.value === 'Go Shopping'){
     editInput.classList.toggle("save");
+
     if(label.classList.contains("editmode")){
       label.innerText=editInput.value;
       editBtn.innerText="Edit";
+
     }else{
         editInput.value=label.innerText;
         editBtn.innerText="Save";
       }
+
     label.classList.toggle("editmode");
+    
       return
     }
 
