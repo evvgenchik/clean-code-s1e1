@@ -10,7 +10,7 @@
 
 var taskInput=document.getElementById("new-task");//Add a new task.
 var addButton=document.getElementsByTagName("button")[0];//first button
-var incompleteTaskHolder=document.getElementById("incompleteTasks");//ul of #incompleteTasks
+var incompleteTaskHolder=document.getElementById("incompletetasks");//ul of #incompleteTasks
 var completedTasksHolder=document.getElementById("completed-tasks");//completed-tasks
 
 
@@ -32,19 +32,23 @@ var createNewTaskElement=function(taskString){
     var deleteButton=document.createElement("button");//delete button
     var deleteButtonImg=document.createElement("img");//delete button image
 
+    listItem.className ='section__item';
+
     label.innerText=taskString;
-    label.className='task';
+    label.className='section__label';
 
     //Each elements, needs appending
+    checkBox.className = 'section__checkbox'
     checkBox.type="checkbox";
     editInput.type="text";
-    editInput.className="task";
+    editInput.className="section__input save";
 
     editButton.innerText="Edit"; //innerText encodes special characters, HTML does not.
-    editButton.className="edit";
+    editButton.className="section__button edit";
 
-    deleteButton.className="delete";
+    deleteButton.className="section__button delete";
     deleteButtonImg.src='./remove.svg';
+    deleteButtonImg.className= 'button-section__img';
     deleteButton.appendChild(deleteButtonImg);
 
 
@@ -59,18 +63,16 @@ var createNewTaskElement=function(taskString){
 
 
 
-var addTask=function(){
+var addTask=function(e){
+  e.preventDefault()
     console.log("Add Task...");
     //Create a new list item with the text from the #new-task:
     if (!taskInput.value) return;
     var listItem=createNewTaskElement(taskInput.value);
-
     //Append listItem to incompleteTaskHolder
     incompleteTaskHolder.appendChild(listItem);
     bindTaskEvents(listItem, taskCompleted);
-
     taskInput.value="";
-
 }
 
 //Edit an existing task.
@@ -78,19 +80,33 @@ var addTask=function(){
 var editTask=function(){
     console.log("Edit Task...");
     console.log("Change 'edit' to 'save'");
-
+  console.log('br');
 
     var listItem=this.parentNode;
 
     var editInput=listItem.querySelector('input[type=text]');
     var label=listItem.querySelector("label");
     var editBtn=listItem.querySelector(".edit");
-    var containsClass=listItem.classList.contains("editMode");
+    var containsClass=editInput.classList.contains("editmode");
     //If class of the parent is .editmode
-    if(containsClass){
+    if(listItem.classList.contains('editmode')){
+    editInput.classList.toggle("save");
 
-        //switch to .editmode
-        //label becomes the inputs value.
+    if(label.classList.contains("editmode")){
+      label.innerText=editInput.value;
+      editBtn.innerText="Edit";
+
+    }else{
+        editInput.value=label.innerText;
+        editBtn.innerText="Save";
+      }
+
+    label.classList.toggle("editmode");
+    
+      return
+    }
+
+    if(containsClass){
         label.innerText=editInput.value;
         editBtn.innerText="Edit";
     }else{
@@ -98,12 +114,11 @@ var editTask=function(){
         editBtn.innerText="Save";
     }
 
-    //toggle .editmode on the parent.
-    listItem.classList.toggle("editMode");
+    editInput.classList.toggle("editmode");
+    label.classList.toggle("editmode");
+    
 };
 
-
-//Delete task.
 var deleteTask=function(){
     console.log("Delete Task...");
 
