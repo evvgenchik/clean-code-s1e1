@@ -89,8 +89,7 @@ var editTask=function(){
     var editBtn=listItem.querySelector(".edit");
     var containsClass=editInput.classList.contains("editmode");
     //If class of the parent is .editmode
-
-    if(editInput.value === 'Go Shopping'){
+    if(listItem.classList.contains('editmode')){
     editInput.classList.toggle("save");
 
     if(label.classList.contains("editmode")){
