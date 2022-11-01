@@ -107,9 +107,6 @@ var editTask=function(){
     }
 
     if(containsClass){
-
-        //switch to .editmode
-        //label becomes the inputs value.
         label.innerText=editInput.value;
         editBtn.innerText="Edit";
     }else{
@@ -117,14 +114,11 @@ var editTask=function(){
         editBtn.innerText="Save";
     }
 
-    //toggle .editmode on the parent.
     editInput.classList.toggle("editmode");
     label.classList.toggle("editmode");
     
 };
 
-
-//Delete task.
 var deleteTask=function(){
     console.log("Delete Task...");
 
